@@ -1,4 +1,3 @@
-# app/main.py
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from app.core.config import get_settings
@@ -15,3 +14,4 @@ async def health():
         "status": "ok",
         "database_url": settings.database_url
     }
+
