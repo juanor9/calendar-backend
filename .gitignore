@@ -195,3 +195,5 @@ cython_debug/
 
 .vscode/
 run-dev.bat
+estructura*.txt
+
