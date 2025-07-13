@@ -3,7 +3,7 @@ name = "vana-planner"
 version = "0.1.0"
 description = "Backend para Vana Planner"
 authors = [
-    {name = "Juan Camilo Orjuela",email = "15643199+juanor9@users.noreply.github.com"}
+    {name = "Juan Camilo Orjuela", email = "15643199+juanor9@users.noreply.github.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.13,<4.0"
@@ -12,9 +12,11 @@ dependencies = [
     "uvicorn[standard] (>=0.35.0,<0.36.0)",
     "python-dotenv (>=1.1.1,<2.0.0)",
     "pydantic-settings (>=2.10.1,<3.0.0)",
-    "strawberry-graphql[fastapi] (>=0.275.6,<0.276.0)"
+    "strawberry-graphql[fastapi] (>=0.275.6,<0.276.0)",
+    "sqlmodel (>=0.0.24,<0.0.25)",
+    "asyncpg (>=0.30.0,<0.31.0)"
 ]
-
+packages = [{ include = "app" }]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -22,4 +24,3 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
-

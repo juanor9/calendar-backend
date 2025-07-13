@@ -4,6 +4,7 @@ import strawberry
 class Query:
     @strawberry.field
     def hello(self) -> str:
-        return "Hello world"
+        return "Hello Tanuki 🦝"
 
-schema = strawberry.Schema(Query)
+
+schema = strawberry.Schema(query=Query)
