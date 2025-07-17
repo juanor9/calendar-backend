@@ -14,9 +14,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: tanuki
-          POSTGRES_PASSWORD: tanuki
-          POSTGRES_DB: vana_planner
+          POSTGRES_USER: ${{ secrets.PG_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.PG_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.PG_DB }}
         ports:
           - 5433:5432
         options: >-
