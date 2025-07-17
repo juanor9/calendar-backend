@@ -26,3 +26,21 @@ build-backend = "poetry.core.masonry.api"
 pytest = "^8.4.1"
 httpx = "^0.28.1"
 pytest-asyncio = "^1.0.0"
+ruff = "^0.12.3"
+mypy = "^1.17.0"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+fix = true
+unsafe-fixes = false
+show-fixes = true
+exclude = ["tests/", ".venv/", "__pycache__/", ".git/"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I", "UP", "C4"]
+ignore = ["E501"]  # líneas largas permitidas si son necesarias
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true

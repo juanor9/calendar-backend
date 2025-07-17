@@ -1,7 +1,8 @@
-from fastapi import FastAPI
 from dotenv import load_dotenv
-from app.core.config import get_settings
+from fastapi import FastAPI
 from strawberry.fastapi import GraphQLRouter
+
+from app.core.config import get_settings
 from app.graphql.schema import schema
 
 load_dotenv()
