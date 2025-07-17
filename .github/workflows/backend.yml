@@ -33,6 +33,7 @@ jobs:
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+        working-directory: backend
 
       - name: Configurar Python
         uses: actions/setup-python@v5
@@ -40,12 +41,12 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependencias
-        run: |
-          poetry install
+        run: poetry install
+        working-directory: backend
 
       - name: Ejecutar tests
-        run: |
-          poetry run pytest
+        run: poetry run pytest
+        working-directory: backend
 
       - name: Desplegar a Railway
         if: github.ref == 'refs/heads/main'
@@ -54,3 +55,4 @@ jobs:
         run: |
           curl -fsSL https://railway.app/install.sh | sh
           railway up --service calendar-backend --environment production
+        working-directory: backend
