@@ -16,16 +16,14 @@ dependencies = [
     "sqlmodel (>=0.0.24,<0.0.25)",
     "asyncpg (>=0.30.0,<0.31.0)"
 ]
-packages = [{ include = "app", from = "." }]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-# ✨ Mantener el modo paquete activado porque sí tienes /app
-# y quieres instalar el proyecto como módulo
 package-mode = true
+packages = [{ include = "app" }]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
@@ -44,7 +42,7 @@ exclude = ["tests/", ".venv/", "__pycache__/", ".git/"]
 
 [tool.ruff.lint]
 select = ["E", "F", "B", "I", "UP", "C4"]
-ignore = ["E501"]  # líneas largas permitidas si son necesarias
+ignore = ["E501"]
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
