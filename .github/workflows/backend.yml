@@ -43,6 +43,8 @@ jobs:
         run: poetry install
 
       - name: Ejecutar tests
+        env:
+          DATABASE_URL: postgresql+asyncpg://${{ secrets.PG_USER }}:${{ secrets.PG_PASSWORD }}@localhost:5433/${{ secrets.PG_DB }}
         run: poetry run pytest
 
       - name: Desplegar a Railway
