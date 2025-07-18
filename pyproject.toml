@@ -22,6 +22,8 @@ httpx = "^0.28.1"
 pytest-asyncio = "^1.0.0"
 ruff = "^0.12.3"
 mypy = "^1.17.0"
+pytest-cov = "^6.2.1"
+psycopg2-binary = "^2.9.10"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -50,3 +52,7 @@ force-sort-within-sections = true
 
 [tool.mypy]
 mypy_path = "app"
+
+[[tool.mypy.overrides]]
+module = "app.db.session"
+disable_error_code = ["call-overload"]

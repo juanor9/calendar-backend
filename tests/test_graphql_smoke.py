@@ -3,7 +3,7 @@ from app.main import app
 
 client = TestClient(app)
 
-def test_hello_query():
+def test_hello_query() -> None:
     query = {
         "query": """
         query {
