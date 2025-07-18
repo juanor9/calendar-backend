@@ -8,11 +8,12 @@ from app.core.config import get_settings
 settings = get_settings()
 engine = create_async_engine(settings.database_url, echo=True)
 
-async_session = sessionmaker(
-    bind=engine,  # Corrige el error de mypy: uso explícito de 'bind'
+async_session: sessionmaker[AsyncSession] = sessionmaker(
+    bind=engine,
     class_=AsyncSession,
     expire_on_commit=False
 )
+
 
 
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
