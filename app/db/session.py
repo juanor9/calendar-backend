@@ -1,3 +1,5 @@
+from typing import AsyncGenerator
+
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -7,9 +9,15 @@ settings = get_settings()
 engine = create_async_engine(settings.database_url, echo=True)
 
 async_session = sessionmaker(
-    engine, class_=AsyncSession, expire_on_commit=False
+    bind=engine,  # Corrige el error de mypy: uso explícito de 'bind'
+    class_=AsyncSession,
+    expire_on_commit=False
 )
 
 
-def get_session() -> AsyncSession:
-    return async_session()
+async def get_session() -> AsyncGenerator[AsyncSession, None]:
+    session = async_session()
+    try:
+        yield session
+    finally:
+        await session.close()
