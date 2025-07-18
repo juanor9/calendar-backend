@@ -47,11 +47,14 @@ jobs:
           DATABASE_URL: postgresql+asyncpg://${{ secrets.PG_USER }}:${{ secrets.PG_PASSWORD }}@localhost:5433/${{ secrets.PG_DB }}
         run: poetry run pytest
 
+      - name: Depurar variables de Railway
+        run: env | grep RAILWAY
+
       - name: Desplegar a Railway
         if: github.ref == 'refs/heads/main'
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }} # <-- Línea añadida
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
         run: |
           curl -fsSL https://railway.app/install.sh | sh
           railway up --service calendar-backend --environment production
