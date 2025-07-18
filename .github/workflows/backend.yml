@@ -3,20 +3,21 @@ name: Backend CI/CD
 on:
   push:
     branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
 
 jobs:
-  backend-ci:
+  test:
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: ${{ secrets.PG_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.PG_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.PG_DB }}
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: vana_planner_test
         ports:
-          - 5433:5432
+          - 5432:5432 # El puerto del host no importa tanto aquí, el servicio se conecta internamente
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -42,11 +43,20 @@ jobs:
 
       - name: Ejecutar tests
         env:
-          DATABASE_URL: postgresql+asyncpg://${{ secrets.PG_USER }}:${{ secrets.PG_PASSWORD }}@localhost:5433/${{ secrets.PG_DB }}
+          # Usamos las credenciales del servicio definido arriba
+          DATABASE_URL: postgresql+asyncpg://testuser:testpass@localhost:5432/vana_planner_test
         run: poetry run pytest
 
+  deploy:
+    needs: test # <-- Este trabajo depende de que 'test' termine correctamente
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # <-- Solo se ejecuta en push a main
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
       - name: Desplegar a Railway
-        if: github.ref == 'refs/heads/main'
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
