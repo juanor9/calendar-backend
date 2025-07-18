@@ -1,9 +1,9 @@
 # tests/conftest.py
 import pytest
+from typing import Generator
 from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine
 from app.main import app
-from app.core.config import get_settings
 from app.db.session import get_session
 
 # URL de la base de datos de pruebas
@@ -15,17 +15,17 @@ engine = create_engine(TEST_DATABASE_URL)
 
 # Fixture para crear una sesión de prueba y limpiar la base de datos
 @pytest.fixture(name="session")
-def session_fixture():
-    SQLModel.metadata.create_all(engine)  # Crea las tablas
+def session_fixture() -> Generator[Session, None, None]:
+    SQLModel.metadata.create_all(engine)
     with Session(engine) as session:
         yield session
-    SQLModel.metadata.drop_all(engine)  # Borra las tablas después de las pruebas
+    SQLModel.metadata.drop_all(engine)
 
 
 # Fixture para el cliente de prueba de FastAPI
 @pytest.fixture(name="client")
-def client_fixture(session: Session):
-    def get_session_override():
+def client_fixture(session: Session) -> Generator[TestClient, None, None]:
+    def get_session_override() -> Session:
         return session
 
     # Reemplaza la dependencia get_session con la versión de prueba
