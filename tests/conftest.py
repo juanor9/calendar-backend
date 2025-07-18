@@ -6,10 +6,10 @@ from sqlmodel import Session, SQLModel, create_engine
 from app.main import app
 from app.db.session import get_session
 
-# URL de la base de datos de pruebas
-TEST_DATABASE_URL = "postgresql://testuser:testpass@localhost:5434/vana_planner_test"
+# URL de la base de datos de pruebas. Usamos el driver psycopg2 para el motor síncrono.
+TEST_DATABASE_URL = "postgresql+psycopg2://testuser:testpass@localhost:5434/vana_planner_test"
 
-# Crear un motor de base dedatos síncrono solo para la configuración/limpieza
+# Crear un motor de base de datos síncrono solo para la configuración/limpieza
 engine = create_engine(TEST_DATABASE_URL)
 
 
