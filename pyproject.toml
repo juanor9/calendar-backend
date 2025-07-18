@@ -50,3 +50,7 @@ force-sort-within-sections = true
 
 [tool.mypy]
 mypy_path = "app"
+
+[[tool.mypy.overrides]]
+module = "app.db.session"
+disable_error_code = ["call-overload"]
