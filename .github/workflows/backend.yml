@@ -51,6 +51,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }} # <-- Línea añadida
         run: |
           curl -fsSL https://railway.app/install.sh | sh
           railway up --service calendar-backend --environment production
