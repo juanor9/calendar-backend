@@ -7,7 +7,9 @@ from app.main import app
 from app.db.session import get_session
 
 # URL de la base de datos de pruebas. Usamos el driver psycopg2 para el motor síncrono.
-TEST_DATABASE_URL = "postgresql+psycopg2://testuser:testpass@localhost:5434/vana_planner_test"
+TEST_DATABASE_URL = (
+    "postgresql+psycopg2://testuser:testpass@localhost:5434/vana_planner_test"
+)
 
 # Crear un motor de base de datos síncrono solo para la configuración/limpieza
 engine = create_engine(TEST_DATABASE_URL)
@@ -31,6 +33,6 @@ def client_fixture(session: Session) -> Generator[TestClient, None, None]:
     # Reemplaza la dependencia get_session con la versión de prueba
     app.dependency_overrides[get_session] = get_session_override
     yield TestClient(app)
-    
+
     # Limpia el override después de las pruebas
     app.dependency_overrides.clear()
