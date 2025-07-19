@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(
         env_file=".env",
-        extra="ignore"  # <-- permite variables adicionales como env, port, etc.
+        extra="ignore",  # <-- permite variables adicionales como env, port, etc.
     )
 
 
